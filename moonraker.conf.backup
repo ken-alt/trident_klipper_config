@@ -1,0 +1,101 @@
+[server]
+host: 0.0.0.0
+port: 7125
+klippy_uds_address: /home/pi/printer_data/comms/klippy.sock
+
+[authorization]
+trusted_clients:
+    10.0.0.0/8
+    127.0.0.0/8
+    169.254.0.0/16
+    172.16.0.0/12
+    192.168.0.0/16
+    FE80::/10
+    ::1/128
+cors_domains:
+    *.lan
+    *.local
+    *://localhost
+    *://localhost:*
+    *://my.mainsail.xyz
+    *://app.fluidd.xyz
+
+[octoprint_compat]
+
+[history]
+
+[update_manager]
+channel: dev
+refresh_interval: 168
+
+[update_manager mainsail-config]
+type: git_repo
+primary_branch: master
+path: ~/mainsail-config
+origin: https://github.com/mainsail-crew/mainsail-config.git
+managed_services: klipper
+
+[update_manager mainsail]
+type: web
+channel: stable
+repo: mainsail-crew/mainsail
+path: ~/mainsail
+
+[update_manager klipper_tmc_autotune]
+type: git_repo
+channel: dev
+path: ~/klipper_tmc_autotune
+origin: https://github.com/andrewmcgr/klipper_tmc_autotune.git
+managed_services: klipper
+primary_branch: main
+install_script: install.sh
+
+[update_manager Klippain-ShakeTune]
+type: git_repo
+origin: https://github.com/Frix-x/klippain-shaketune.git
+path: ~/klippain_shaketune
+virtualenv: ~/klippy-env
+requirements: requirements.txt
+system_dependencies: system-dependencies.json
+primary_branch: main
+managed_services: klipper
+
+[update_manager KlipperScreen]
+type: git_repo
+path: ~/KlipperScreen
+origin: https://github.com/KlipperScreen/KlipperScreen.git
+virtualenv: ~/.KlipperScreen-env
+requirements: scripts/KlipperScreen-requirements.txt
+system_dependencies: scripts/system-dependencies.json
+managed_services: KlipperScreen
+
+
+[spoolman]
+server: http://192.168.1.175:7912
+#   URL to the Spoolman instance. This parameter must be provided.
+sync_rate: 5
+#   The interval, in seconds, between sync requests with the
+#   Spoolman server.  The default is 5.
+
+[wled chamber]
+type: http
+#   The type of device. Can be either http, or serial.
+#   This parameter must be provided.
+address: 192.168.20.166 #trident-lights.local
+#   The address should be a valid ip or hostname for the wled webserver.
+#   Required when type: http
+#serial:
+#   The serial port to be used to communicate directly to wled. Requires wled
+#   0.13 Build 2108250 or later.
+#   Required when type: serial
+#initial_preset:
+#   Initial preset ID (favourite) to use. If not specified initial_colors
+#   will be used instead.
+#initial_red:
+#initial_green:
+#initial_blue: 
+initial_white: .9
+#   Initial colors to use for all neopixels should initial_preset not be set,
+#   initial_white will only be used for RGBW wled strips (defaults: 0.5)
+chain_count: 31
+#   Number of addressable neopixels for use (default: 1)
